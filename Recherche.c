@@ -102,8 +102,19 @@ int main() {
     const int screenHeight = 800;
 
     int inputNumber=-1; //Initialisé -1 au cas où aucun valeur n'est entrée par l'utilisateur
+    bool showMessage = true; //controler de la visibilité du msg (Nous voulons masquer le message une fois la recherche lancée)
 
     InitWindow(screenWidth, screenHeight, "Recherche dans un arbre Binaire");
+
+    //message explicatif au utilisateurs
+    const char *line1 = "Lorsque vous cliquez sur le button, un algorithme de recherche sera lancé pour";
+    const char *line2 = "chercher la valeur que vous avez sélectionnée";
+    // calcul pour centrer le rectangle message
+    int rectangleWidth = screenWidth - 120;
+    int rectangleHeight = 90;
+    int rectangleX = (screenWidth - rectangleWidth) / 2;
+    int rectangleY = screenHeight - 200;
+    Rectangle messageRect = { rectangleX, rectangleY, rectangleWidth, rectangleHeight };
 
     SetTargetFPS(60);
 
@@ -146,8 +157,14 @@ int main() {
 
     buttonHovered = CheckCollisionPointRec(GetMousePosition(), buttonRect);
 
-    BeginDrawing();
+       if (showMessage) {
+        DrawRectangleRounded(messageRect, 0.2, 0, (Color) { 0x29, 0x32, 0x41, 200 });
+        // Afficher le message
+        DrawText(line1, messageRect.x + 10, messageRect.y + 10, 20, customColor2);
+        DrawText(line2, messageRect.x + 10, messageRect.y + 35, 20, customColor2);
+        }
 
+    BeginDrawing();
 
     ClearBackground(backgroundColor);
 
@@ -166,21 +183,21 @@ int main() {
         for (int key = KEY_ZERO; key <= KEY_NINE; ++key) {
             if (IsKeyPressed(key)) {
                 if (inputLength < MAX_INPUT_LENGTH) {
-                    inputBuffer[inputLength++] = '0' + (key - KEY_ZERO); // Convert key to digit character
-                    inputBuffer[inputLength] = '\0'; // Null-terminate the string
+                    inputBuffer[inputLength++] = '0' + (key - KEY_ZERO); // Convertir la touche en caractère numérique
+                    inputBuffer[inputLength] = '\0'; //Insèrer un caractère nul pour terminer la chaîne
                 }
             }
         }
 
         if ((IsMouseButtonPressed(MOUSE_LEFT_BUTTON) && buttonHovered) && inputLength > 0) {
-            // Reset input buffer when Enter key is pressed and a number is entered
+            //Efface le nombre de l'écran lorsque 'Entrée' est pressée
             inputLength = 0;
             memset(inputBuffer, 0, sizeof(inputBuffer));
         }
 
-        if (IsKeyPressed(KEY_BACKSPACE)) {
-            if (inputLength > 0) {
-                inputBuffer[--inputLength] = '\0'; // Remove the last entered digit
+        if (IsKeyPressed(KEY_BACKSPACE)) { // vérifie si la touche "Retour Arrière" est enfoncée
+            if (inputLength > 0) { //Si la longueur de l'entrée est supérieure à zéro
+                inputBuffer[--inputLength] = '\0'; //supprimer le dernier caractère
             }
         }
 }
