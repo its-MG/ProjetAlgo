@@ -124,10 +124,29 @@ int main() {
 
     Color backgroundColor = {0x0A, 0x23, 0x44, 255 };  // couleur arrière-plan
 
+    Color customColor1 = { 0x29, 0x32, 0x41, 255 };
+    Color customColor2 = { 0x98, 0xC1, 0xD9, 255 };
+    Color textColor = WHITE;
+    Rectangle buttonRect = {screenWidth / 2 - 100, 700, 200, 50}; // dimentions bouton recherche
+    bool buttonHovered = false; // pour savoir si la souris est sur le bouton
+
     while (!WindowShouldClose()) {
 
+    buttonHovered = CheckCollisionPointRec(GetMousePosition(), buttonRect);
+
     BeginDrawing();
+
     ClearBackground(backgroundColor);
+    
+        if (buttonHovered) {
+            textColor = customColor1;
+        }else{
+            textColor = WHITE;
+        }
+
+    DrawRectangleRounded(buttonRect, 0.2, 0, buttonHovered ? customColor2 : customColor1); //effet changement de couleur lors du survol avec la souris 
+    DrawText("Rechercher", buttonRect.x +40, buttonRect.y + 15, 20, textColor);
+
     EndDrawing();
 
 }
