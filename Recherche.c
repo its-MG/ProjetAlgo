@@ -101,6 +101,8 @@ int main() {
     const int screenWidth = 1000;
     const int screenHeight = 800;
 
+    int inputNumber=-1; //Initialisé -1 au cas où aucun valeur n'est entrée par l'utilisateur
+
     InitWindow(screenWidth, screenHeight, "Recherche dans un arbre Binaire");
 
     SetTargetFPS(60);
@@ -132,12 +134,23 @@ int main() {
 
     while (!WindowShouldClose()) {
 
+    //Traitement de la saisie 
+    // saisie du nbr sous forme de chaîne de caractères
+    DrawText("Entrez un entier :", 20, 20, 20,WHITE);
+     for (int i = 0; i < inputLength; ++i) {
+        DrawText(TextFormat("%c", inputBuffer[i]), 20 + i * 20, 50, 20, WHITE);
+         }
+        if (inputLength > 0) {
+            inputNumber = atoi(inputBuffer); // convertir la chaine en entier 
+        }
+
     buttonHovered = CheckCollisionPointRec(GetMousePosition(), buttonRect);
 
     BeginDrawing();
 
+
     ClearBackground(backgroundColor);
-    
+
         if (buttonHovered) {
             textColor = customColor1;
         }else{
@@ -148,7 +161,28 @@ int main() {
     DrawText("Rechercher", buttonRect.x +40, buttonRect.y + 15, 20, textColor);
 
     EndDrawing();
+    
+    //Traitement pour la saisie 
+        for (int key = KEY_ZERO; key <= KEY_NINE; ++key) {
+            if (IsKeyPressed(key)) {
+                if (inputLength < MAX_INPUT_LENGTH) {
+                    inputBuffer[inputLength++] = '0' + (key - KEY_ZERO); // Convert key to digit character
+                    inputBuffer[inputLength] = '\0'; // Null-terminate the string
+                }
+            }
+        }
 
+        if ((IsMouseButtonPressed(MOUSE_LEFT_BUTTON) && buttonHovered) && inputLength > 0) {
+            // Reset input buffer when Enter key is pressed and a number is entered
+            inputLength = 0;
+            memset(inputBuffer, 0, sizeof(inputBuffer));
+        }
+
+        if (IsKeyPressed(KEY_BACKSPACE)) {
+            if (inputLength > 0) {
+                inputBuffer[--inputLength] = '\0'; // Remove the last entered digit
+            }
+        }
 }
     CloseWindow();
     return 0;
