@@ -184,7 +184,17 @@ int main() {
     DrawRectangleRounded(buttonRect, 0.2, 0, buttonHovered ? customColor2 : customColor1); //effet changement de couleur lors du survol avec la souris 
     DrawText("Rechercher", buttonRect.x +40, buttonRect.y + 15, 20, textColor);
 
-
+        if (searching) {
+            Color displayColor = found ? foundGreen:(Color){ 0xF2, 0x4C, 0x00, 255 };
+            const char* message = TextFormat("Valeur %d %strouvée", searchValue,(found ? "" : "non "));//phrase -> val trouvée ou non
+            
+            // Mesure de la largeur du text pour le centrer horizontalement
+            int textWidth = MeasureText(message,25);
+            // Calcul coordonée x
+            int textX = (screenWidth - textWidth) / 2;
+            DrawText(message, textX, rectangleY + 20,25, displayColor);
+        }
+        
        if (showMessage) {
         DrawRectangleRounded(messageRect, 0.2, 0, (Color) { 0x29, 0x32, 0x41, 200 });
         // Afficher le message
