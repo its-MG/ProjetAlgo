@@ -103,12 +103,13 @@ int main() {
 
     int inputNumber=-1; //Initialisé -1 au cas où aucun valeur n'est entrée par l'utilisateur
     bool showMessage = true; //controler de la visibilité du msg (Nous voulons masquer le message une fois la recherche lancée)
+    Color foundGreen = (Color){100, 180, 100, 255};
 
     InitWindow(screenWidth, screenHeight, "Recherche dans un arbre Binaire");
 
     //message explicatif au utilisateurs
     const char *line1 = "Lorsque vous cliquez sur le button, un algorithme de recherche sera lancé pour";
-    const char *line2 = "chercher la valeur que vous avez sélectionnée";
+    const char *line2 = "chercher la valeur que vous avez sélectionnée.";
     // calcul pour centrer le rectangle message
     int rectangleWidth = screenWidth - 120;
     int rectangleHeight = 90;
@@ -142,6 +143,9 @@ int main() {
     Color textColor = WHITE;
     Rectangle buttonRect = {screenWidth / 2 - 100, 700, 200, 50}; // dimentions bouton recherche
     bool buttonHovered = false; // pour savoir si la souris est sur le bouton
+    int searchValue = 0;
+    bool found = false;  //found est un booléen qui récupére si la valeur existe dans l'arbre ou pas 
+    bool searching = false; //recherche effectuée
 
     while (!WindowShouldClose()) {
 
@@ -155,18 +159,21 @@ int main() {
             inputNumber = atoi(inputBuffer); // convertir la chaine en entier 
         }
 
-    buttonHovered = CheckCollisionPointRec(GetMousePosition(), buttonRect);
+     buttonHovered = CheckCollisionPointRec(GetMousePosition(), buttonRect);
 
-       if (showMessage) {
-        DrawRectangleRounded(messageRect, 0.2, 0, (Color) { 0x29, 0x32, 0x41, 200 });
-        // Afficher le message
-        DrawText(line1, messageRect.x + 10, messageRect.y + 10, 20, customColor2);
-        DrawText(line2, messageRect.x + 10, messageRect.y + 35, 20, customColor2);
+        if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON) && buttonHovered) {
+            searchValue = inputNumber;
+            found = searchNode(root, searchValue);
+            searching = true;
+            showMessage = false; //pour cacher le msg d'explication aprés avoir clicker le button rechercher
         }
 
     BeginDrawing();
 
     ClearBackground(backgroundColor);
+
+        bool foundValue = false; // pour avoir la position de la valeur trouvée
+        drawTree(root, screenWidth / 2, 60, HORIZONTAL_SPACE, VERTICAL_SPACE, searchValue, &foundValue); //afficher l'arbre
 
         if (buttonHovered) {
             textColor = customColor1;
@@ -176,6 +183,14 @@ int main() {
 
     DrawRectangleRounded(buttonRect, 0.2, 0, buttonHovered ? customColor2 : customColor1); //effet changement de couleur lors du survol avec la souris 
     DrawText("Rechercher", buttonRect.x +40, buttonRect.y + 15, 20, textColor);
+
+
+       if (showMessage) {
+        DrawRectangleRounded(messageRect, 0.2, 0, (Color) { 0x29, 0x32, 0x41, 200 });
+        // Afficher le message
+        DrawText(line1, messageRect.x + 10, messageRect.y + 10, 20, customColor2);
+        DrawText(line2, messageRect.x + 10, messageRect.y + 35, 20, customColor2);
+        }
 
     EndDrawing();
     
