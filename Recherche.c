@@ -51,7 +51,6 @@ void insertNode(TreeNode *root, int index) {
             root->right = createNode(index);
         } else {
             insertNode(root->right, index);
-            DrawText("Enter a number :", 20, 20, 20, BLACK);
         }
     } else {
         if (root->left == NULL) {
