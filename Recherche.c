@@ -5,7 +5,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-#define CIRCLE_RADIUS 38
+#define CIRCLE_RADIUS 35
 #define HORIZONTAL_SPACE 250
 #define VERTICAL_SPACE 150
 #define MAX_INPUT_LENGTH 2 // l'utilisateur peut entrer un nombre a deux chiffres max
@@ -103,6 +103,7 @@ int main() {
 
     int inputNumber=-1; //Initialisé -1 au cas où aucun valeur n'est entrée par l'utilisateur
     bool showMessage = true; //controler de la visibilité du msg (Nous voulons masquer le message une fois la recherche lancée)
+    bool showInfo = false; // controler si la visibilité du msg explication du fonctionement 
     Color foundGreen = (Color){100, 180, 100, 255};
 
     InitWindow(screenWidth, screenHeight, "Recherche dans un arbre Binaire");
@@ -136,7 +137,7 @@ int main() {
      insertNode(root,10);
      insertNode(root,14);
 
-    Color backgroundColor = {0x0A, 0x23, 0x44, 255 };  // couleur arrière-plan
+    Color backgroundColor = (Color){ 15, 16, 53, 255 };  // couleur arrière-plan
 
     Color customColor1 = { 0x29, 0x32, 0x41, 255 };
     Color customColor2 = { 0x98, 0xC1, 0xD9, 255 };
@@ -168,12 +169,15 @@ int main() {
             showMessage = false; //pour cacher le msg d'explication aprés avoir clicker le button rechercher
         }
 
+        if (IsKeyPressed(KEY_I)) {
+            showInfo = !showInfo; //pour faire appaitre et disparaitre le msg fonctionnement algo
+        }
     BeginDrawing();
 
     ClearBackground(backgroundColor);
 
         bool foundValue = false; // pour avoir la position de la valeur trouvée
-        drawTree(root, screenWidth / 2, 60, HORIZONTAL_SPACE, VERTICAL_SPACE, searchValue, &foundValue); //afficher l'arbre
+        drawTree(root, screenWidth / 2,80, HORIZONTAL_SPACE, VERTICAL_SPACE, searchValue, &foundValue); //afficher l'arbre
 
         if (buttonHovered) {
             textColor = customColor1;
@@ -198,8 +202,26 @@ int main() {
        if (showMessage) {
         DrawRectangleRounded(messageRect, 0.2, 0, (Color) { 0x29, 0x32, 0x41, 200 });
         // Afficher le message
-        DrawText(line1, messageRect.x + 10, messageRect.y + 10, 20, customColor2);
-        DrawText(line2, messageRect.x + 10, messageRect.y + 35, 20, customColor2);
+        DrawText(line1, messageRect.x + 20, messageRect.y + 20, 20, customColor2);
+        DrawText(line2, messageRect.x + 20, messageRect.y + 45, 20, customColor2);
+        }
+
+       // Dessiner le texte en haut à droite
+        DrawText("Appuyez sur i pour plus d'infos",screenWidth - MeasureText("Appuyez sur i pour plus d'infos", 20) -20,20,20, customColor2);
+
+        if (showInfo) {
+            //message d'explication du fonctionement
+            DrawRectangleRounded((Rectangle){ 500,0,490,600}, 0.1, 0,(Color){ 15, 16, 53, 230});
+            
+            DrawText("Fonctionnement de l'algorithme",screenWidth/2 +80,20, 24,customColor2);
+            DrawText("if this == null",screenWidth/2 +90,80, 22,WHITE);
+            DrawText("return null",screenWidth/2 +90,130, 22,WHITE);
+            DrawText("else if this key == search value",screenWidth/2 +90,180, 22,WHITE);
+            DrawText(" return this",screenWidth/2 +90, 230, 22,WHITE);
+            DrawText("else if this key < search value",screenWidth/2 +90, 280, 22,WHITE);
+            DrawText("search right",screenWidth/2 +90, 330, 22,WHITE);
+            DrawText("else search left",screenWidth/2 +90, 380, 22,WHITE);
+            DrawText("Pour fermer, appuyez sur i",screenWidth/2 +105,460, 22,customColor2);
         }
 
     EndDrawing();
