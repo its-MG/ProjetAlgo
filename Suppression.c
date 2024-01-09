@@ -30,7 +30,6 @@ TreeNode *createNode(int data, float x, float y)
 }
 
 // procedure insertion de noeuds
-
 void insertNode(TreeNode *root, int index)
 {
     const int screenWidth = 1200;
@@ -60,6 +59,7 @@ void insertNode(TreeNode *root, int index)
         }
     }
 }
+
 // procedure dessiner l'arbre
 void drawTree(TreeNode *root, int x, int y, int hSpacing, int vSpacing)
 {
@@ -89,6 +89,7 @@ void drawTree(TreeNode *root, int x, int y, int hSpacing, int vSpacing)
         DrawText(TextFormat("%d", root->data), textX, textY, 20, WHITE);
     }
 }
+
 // fonction de suppression
 TreeNode *deleteNode(TreeNode *root, int key)
 {
@@ -124,6 +125,7 @@ TreeNode *deleteNode(TreeNode *root, int key)
     }
     return root;
 }
+
 // MAIN
 int main()
 {
@@ -149,3 +151,48 @@ int main()
 
     Rectangle deleteButtonRect = {10, 10, 150, 30};       // "Delete Node" button rectangle
     TreeNode *root = createNode(16, screenWidth / 2, 50); // Initial node for the binary tree
+    insertNode(root, 8);
+    insertNode(root, 24);
+    insertNode(root, 4);
+    insertNode(root, 12);
+    insertNode(root, 20);
+    insertNode(root, 28);
+    insertNode(root, 2);
+    insertNode(root, 6);
+    insertNode(root, 10);
+    insertNode(root, 14);
+    insertNode(root, 18);
+    insertNode(root, 22);
+    insertNode(root, 26);
+    insertNode(root, 30);
+
+    bool treeDeleted = false;
+
+    while (!WindowShouldClose())
+    {
+        int key = GetCharPressed();
+
+        if (key != 0)
+        {
+            if ((key >= '0' && key <= '9') && inputLength < MAX_INPUT_LENGTH)
+            {
+                inputBuffer[inputLength++] = (char)key;
+                inputBuffer[inputLength] = '\0'; // Null-terminate the string
+            }
+        }
+        else if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON))
+        {
+            if (inputLength > 0)
+            {
+                inputNumber = atoi(inputBuffer); // Convert string to integer
+                inputLength = 0;
+                memset(inputBuffer, 0, sizeof(inputBuffer));
+
+                showMessage = false;
+
+                root = deleteNode(root, inputNumber);
+
+                if (root == NULL)
+                    treeDeleted = true;
+            }
+        }
