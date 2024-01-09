@@ -196,3 +196,15 @@ int main()
                     treeDeleted = true;
             }
         }
+        BeginDrawing();
+
+        ClearBackground(backgroundColor);
+
+        if (showMessage)
+        {
+            // message d'explication au début
+            DrawRectangleRounded(messageRect, 0.2, 0, GRAY);
+            // dessiner le message
+            DrawText(line1, messageRect.x + 10, messageRect.y + 10, 20, BLACK);
+            DrawText(line2, messageRect.x + 10, messageRect.y + 35, 20, BLACK);
+        }
