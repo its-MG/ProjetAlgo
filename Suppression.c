@@ -210,13 +210,24 @@ int main()
         }
         DrawText("Saisir un nombre:", 10, screenHeight - 50, 20, GREEN);
 
-        if (showMessage)
-        {
-            // message explicatif a l'utilisateur
-            DrawText("Cliquez sur 'Supprimer' après avoir saisi une valeur", 12, 50, 20, BLACK);
-        }
         // user input
         for (int i = 0; i < inputLength; ++i)
         {
             DrawText(TextFormat("%c", inputBuffer[i]), 200 + i * 20, screenHeight - 50, 20, GREEN);
         }
+
+        if (showMessage)
+        {
+            // message explicatif a l'utilisateur
+            DrawText("Cliquez sur 'Supprimer' après avoir saisi une valeur", 12, 50, 20, BLACK);
+        }
+        // dessiner le rectangle du boutton supprimer
+        DrawRectangleRounded(deleteButtonRect, 0.2, 0, DARKGRAY);
+
+        DrawText("Supprimer", deleteButtonRect.x + 10, deleteButtonRect.y + 8, 20, WHITE);
+
+        drawTree(root, screenWidth / 2, 80, screenWidth / 4, 150);
+
+        // compteur des noeud supprimés
+
+        DrawText(TextFormat("Noeuds supprimés: %d", deletedNodeCounter), 10, screenHeight - 30, 20, GREEN);
