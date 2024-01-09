@@ -231,3 +231,13 @@ int main()
         // compteur des noeud supprimés
 
         DrawText(TextFormat("Noeuds supprimés: %d", deletedNodeCounter), 10, screenHeight - 30, 20, GREEN);
+        // cas ou larbre a été completement supprimé afficher erreur
+        if (treeDeleted)
+            DrawText("Erreur: l'arbre a été completement supprimé!", 10, 60, 20, RED);
+        EndDrawing();
+    }
+
+    CloseWindow();
+
+    return 0;
+}
