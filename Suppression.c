@@ -124,3 +124,28 @@ TreeNode *deleteNode(TreeNode *root, int key)
     }
     return root;
 }
+// MAIN
+int main()
+{
+    Color backgroundColor = {0x0A, 0x23, 0x44, 255};
+    const int screenWidth = 1200;
+    const int screenHeight = 800;
+    int inputNumber;
+
+    bool showMessage = true;
+
+    InitWindow(screenWidth, screenHeight, "Visualisation d'un arbre binaire - Raylib");
+
+    // message explicatif au utilisateurs
+    const char *line1 = "Lorsque vous cliquez sur le button, un algorithme de suppression sera lancé pour supprimer ";
+    const char *line2 = "la valeur que vous avez saisi";
+
+    // calcul pour centrer le rectangle message
+    int rectangleWidth = screenWidth - 90;
+    int rectangleHeight = 80;
+    int rectangleX = (screenWidth - rectangleWidth) / 2; // X position for centering
+    int rectangleY = screenHeight - 200;                 // Y position at the bottom with a margin
+    Rectangle messageRect = {rectangleX, rectangleY, rectangleWidth, rectangleHeight};
+
+    Rectangle deleteButtonRect = {10, 10, 150, 30};       // "Delete Node" button rectangle
+    TreeNode *root = createNode(16, screenWidth / 2, 50); // Initial node for the binary tree
