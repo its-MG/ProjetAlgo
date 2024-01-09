@@ -4,7 +4,7 @@
 #include <string.h>
 
 #define MAX_INPUT_LENGTH 2 // nombre max des digits
-#define CIRCLE_RADIUS 30;
+#define CIRCLE_RADIUS 30
 char inputBuffer[MAX_INPUT_LENGTH + 1]; // +1 for null-terminator
 int inputLength = 0;
 int deletedNodeCounter = 0; // Une variable qui track les noeuds suprimes
@@ -79,8 +79,9 @@ void drawTree(TreeNode *root, int x, int y, int hSpacing, int vSpacing)
             DrawLine(posX, posY, posX + hSpacing, posY + vSpacing, WHITE);
             drawTree(root->right, posX + hSpacing, posY + vSpacing, hSpacing / 2, vSpacing);
         }
+        Color customColor = {0x1F, 0x5E, 0x91, 255}; // couleur bleu pour les autres noeuds
 
-        DrawCircle(posX, posY, CIRCLE_RADIUS, BLUE);
+        DrawCircle(posX, posY, CIRCLE_RADIUS, customColor);
 
         int textWidth = MeasureText(TextFormat("%d", root->data), 20);
         int textHeight = 20;
@@ -90,6 +91,16 @@ void drawTree(TreeNode *root, int x, int y, int hSpacing, int vSpacing)
     }
 }
 
+// rechercher la valeur min
+TreeNode *minValueNode(TreeNode *node)
+{
+    TreeNode *current = node;
+
+    while (current->left != NULL)
+        current = current->left;
+
+    return current;
+}
 // fonction de suppression
 TreeNode *deleteNode(TreeNode *root, int key)
 {
@@ -129,14 +140,14 @@ TreeNode *deleteNode(TreeNode *root, int key)
 // MAIN
 int main()
 {
-    Color backgroundColor = {0x0A, 0x23, 0x44, 255};
+    Color backgroundColor = (Color){15, 16, 53, 255};
     const int screenWidth = 1200;
     const int screenHeight = 800;
     int inputNumber;
 
     bool showMessage = true;
 
-    InitWindow(screenWidth, screenHeight, "Visualisation d'un arbre binaire - Raylib");
+    InitWindow(screenWidth, screenHeight, "Visualisation de suppression dans un arbre binaire - Raylib");
 
     // message explicatif au utilisateurs
     const char *line1 = "Lorsque vous cliquez sur le button, un algorithme de suppression sera lancé pour supprimer ";
@@ -149,7 +160,7 @@ int main()
     int rectangleY = screenHeight - 200;                 // Y position at the bottom with a margin
     Rectangle messageRect = {rectangleX, rectangleY, rectangleWidth, rectangleHeight};
 
-    Rectangle deleteButtonRect = {10, 10, 150, 30};       // "Delete Node" button rectangle
+    Rectangle deleteButtonRect = {10, 10, 150, 40};       // "Delete Node" button rectangle
     TreeNode *root = createNode(16, screenWidth / 2, 50); // Initial node for the binary tree
     insertNode(root, 8);
     insertNode(root, 24);
@@ -203,10 +214,10 @@ int main()
         if (showMessage)
         {
             // message d'explication au début
-            DrawRectangleRounded(messageRect, 0.2, 0, GRAY);
+            DrawRectangleRounded(messageRect, 0.2, 0, DARKGRAY);
             // dessiner le message
-            DrawText(line1, messageRect.x + 10, messageRect.y + 10, 20, BLACK);
-            DrawText(line2, messageRect.x + 10, messageRect.y + 35, 20, BLACK);
+            DrawText(line1, messageRect.x + 10, messageRect.y + 10, 20, WHITE);
+            DrawText(line2, messageRect.x + 10, messageRect.y + 35, 20, WHITE);
         }
         DrawText("Saisir un nombre:", 10, screenHeight - 50, 20, GREEN);
 
@@ -216,15 +227,10 @@ int main()
             DrawText(TextFormat("%c", inputBuffer[i]), 200 + i * 20, screenHeight - 50, 20, GREEN);
         }
 
-        if (showMessage)
-        {
-            // message explicatif a l'utilisateur
-            DrawText("Cliquez sur 'Supprimer' après avoir saisi une valeur", 12, 50, 20, BLACK);
-        }
         // dessiner le rectangle du boutton supprimer
         DrawRectangleRounded(deleteButtonRect, 0.2, 0, DARKGRAY);
 
-        DrawText("Supprimer", deleteButtonRect.x + 10, deleteButtonRect.y + 8, 20, WHITE);
+        DrawText("Supprimer", deleteButtonRect.x + 25, deleteButtonRect.y + 8, 20, WHITE);
 
         drawTree(root, screenWidth / 2, 80, screenWidth / 4, 150);
 
