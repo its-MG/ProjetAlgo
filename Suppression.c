@@ -208,3 +208,9 @@ int main()
             DrawText(line1, messageRect.x + 10, messageRect.y + 10, 20, BLACK);
             DrawText(line2, messageRect.x + 10, messageRect.y + 35, 20, BLACK);
         }
+
+        if (showMessage)
+        {
+            // message explicatif a l'utilisateur
+            DrawText("Cliquez sur 'Supprimer' après avoir saisi une valeur", 12, 50, 20, BLACK);
+        }
