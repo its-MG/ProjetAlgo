@@ -208,9 +208,15 @@ int main()
             DrawText(line1, messageRect.x + 10, messageRect.y + 10, 20, BLACK);
             DrawText(line2, messageRect.x + 10, messageRect.y + 35, 20, BLACK);
         }
+        DrawText("Saisir un nombre:", 10, screenHeight - 50, 20, GREEN);
 
         if (showMessage)
         {
             // message explicatif a l'utilisateur
             DrawText("Cliquez sur 'Supprimer' après avoir saisi une valeur", 12, 50, 20, BLACK);
+        }
+        // user input
+        for (int i = 0; i < inputLength; ++i)
+        {
+            DrawText(TextFormat("%c", inputBuffer[i]), 200 + i * 20, screenHeight - 50, 20, GREEN);
         }
