@@ -89,3 +89,38 @@ void drawTree(TreeNode *root, int x, int y, int hSpacing, int vSpacing)
         DrawText(TextFormat("%d", root->data), textX, textY, 20, WHITE);
     }
 }
+// fonction de suppression
+TreeNode *deleteNode(TreeNode *root, int key)
+{
+    if (root == NULL)
+        return root;
+
+    if (key < root->data)
+        root->left = deleteNode(root->left, key);
+    else if (key > root->data)
+        root->right = deleteNode(root->right, key);
+    else
+    {
+        if (root->left == NULL)
+        {
+            TreeNode *temp = root->right;
+            free(root);
+            deletedNodeCounter++;
+            return temp;
+        }
+        else if (root->right == NULL)
+        {
+            TreeNode *temp = root->left;
+            free(root);
+            deletedNodeCounter++;
+            return temp;
+        }
+
+        TreeNode *temp = minValueNode(root->right);
+
+        root->data = temp->data;
+
+        root->right = deleteNode(root->right, temp->data);
+    }
+    return root;
+}
