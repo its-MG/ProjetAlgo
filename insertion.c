@@ -45,3 +45,46 @@ int QueueSize(Queue* queue) {
     }
     return count;
 }
+
+// Function to enqueue a tree node into the queue
+void Enqueue(Queue* queue, TreeNode* data) {
+    QueueNode* newNode = (QueueNode*)malloc(sizeof(QueueNode));
+    newNode->data = data;
+    newNode->next = NULL;
+
+    if (IsQueueEmpty(queue)) {
+        queue->front = queue->rear = newNode;
+    } else {
+        queue->rear->next = newNode;
+        queue->rear = newNode;
+    }
+}
+
+// Function to dequeue a tree node from the queue
+TreeNode* Dequeue(Queue* queue) {
+    if (IsQueueEmpty(queue)) {
+        return NULL;
+    }
+
+    QueueNode* temp = queue->front;
+    TreeNode* data = temp->data;
+
+    queue->front = temp->next;
+
+    if (queue->front == NULL) {
+        queue->rear = NULL;
+    }
+
+    free(temp);
+
+    return data;
+}
+
+// Function to free the queue
+void FreeQueue(Queue* queue) {
+    while (!IsQueueEmpty(queue)) {
+        Dequeue(queue);
+    }
+
+    free(queue);
+}
