@@ -192,4 +192,75 @@ int main() {
     InitWindow(screenWidth, screenHeight, "Binary Tree Visualization - Raylib");
 
     SetTargetFPS(60);
+    
+    TreeNode* root = NULL;
+    char inputValue[4] = "";
+    int inputLength = 0;
+    int errorOccurred = 0; // Variable to track whether an error has occurred
+
+    while (!WindowShouldClose()) {
+        BeginDrawing();
+        ClearBackground((Color){244, 240, 236, 255});
+
+        // Display instructions
+        DrawText("Insertion in a Binary Tree Node by Node in a level-order manner", 20, 10, 23, (Color){124, 10, 2, 255});
+
+        // Draw the binary tree
+        drawTree(root, screenWidth / 2, 90, 200, 100);
+
+        // Draw the input text box
+        Rectangle textBoxBounds = {10, screenHeight - 40, 100, 30};
+
+        // Draw the grey rectangle (text box)
+        DrawRectangleRec(textBoxBounds, LIGHTGRAY);
+
+        // Draw the black border for the text box
+        DrawRectangleLinesEx(textBoxBounds, 2, BLACK);
+        DrawText(inputValue, textBoxBounds.x + 10 , textBoxBounds.y + 7, 20, BLACK);
+
+        // Draw the insert button
+        Rectangle buttonBounds = {120, screenHeight - 40, 200, 30};
+        DrawRoundedButton(buttonBounds, "Insert new node", (Color){124, 10, 2, 255}, WHITE);
+
+        // Check if the button is pressed
+        if (CheckCollisionPointRec(GetMousePosition(), buttonBounds) && IsMouseButtonPressed(MOUSE_LEFT_BUTTON)) {
+            if (inputLength > 0) {
+                int value = atoi(inputValue);
+                root = insertNode(root, value, &errorOccurred);
+                // Reset input buffer when the button is pressed and a number is entered
+                inputLength = 0;
+                memset(inputValue, 0, sizeof(inputValue));
+            }
+        }
+
+        // add a descriptive message on how it works 
+        DrawRectangleRounded((Rectangle){60, screenHeight - 170, 670, 60}, 0.2, 0, (Color){200, 200, 200, 255});
+        DrawText(" enter the node's value and press the insert button to insert\n\n       the value to the tree in a level-order insertion", 60 + 10, screenHeight - 170 + 5, 20, BLACK);
+
+
+        // Display error message
+        if (errorOccurred) {
+            DrawText("Error: Tree is full (reached level 5)", 10, screenHeight - 90 , 20, (Color){124, 10, 2, 255});
+            // Do not reset errorOccurred after displaying the error message
+            // The message will remain on the screen until the program is closed
+        }
+
+        // Handle text input
+        int key = GetKeyPressed();
+        if (key >= KEY_ZERO && key <= KEY_NINE) {  // Only allow numeric input
+            if (inputLength < 3) {
+                inputValue[inputLength++] = '0' + (key - KEY_ZERO); // Convert key to digit character
+            }
+        } else if (key == KEY_BACKSPACE) {  // Handle backspace
+            if (inputLength > 0) {
+                inputValue[--inputLength] = '\0'; // Remove the last entered digit
+            }
+        }
+
+        EndDrawing();
+    }
+
+    CloseWindow();
+
+    return 0;
 }
