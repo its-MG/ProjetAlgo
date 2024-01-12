@@ -88,3 +88,89 @@ void FreeQueue(Queue* queue) {
 
     free(queue);
 }
+// Function to create a new binary tree node
+TreeNode* createNode(int data) {
+    TreeNode* newNode = (TreeNode*)malloc(sizeof(TreeNode));
+    newNode->data = data;
+    newNode->left = NULL;
+    newNode->right = NULL;
+    return newNode;
+}
+
+// Function to insert a new node into the binary tree level by level
+TreeNode* insertNode(TreeNode* root, int data, int* errorOccurred) {
+    if (root == NULL) {
+        return createNode(data);
+    }
+
+    Queue* queue = InitQueue(); // Implement a simple queue for level-order traversal
+    Enqueue(queue, root);
+
+    int level = 1; // Track the level of the current node
+
+    while (!IsQueueEmpty(queue)) {
+        int nodesAtCurrentLevel = QueueSize(queue);
+
+        while (nodesAtCurrentLevel > 0) {
+            TreeNode* current = Dequeue(queue);
+
+            if (level < 5) {
+                if (current->left == NULL) {
+                    current->left = createNode(data);
+                    FreeQueue(queue);
+                    return root;
+                } else {
+                    Enqueue(queue, current->left);
+                }
+
+                if (current->right == NULL) {
+                    current->right = createNode(data);
+                    FreeQueue(queue);
+                    return root;
+                } else {
+                    Enqueue(queue, current->right);
+                }
+            } else {
+                // Display error message and stop insertion
+                *errorOccurred = 1;
+                FreeQueue(queue);
+                return root;
+            }
+
+            nodesAtCurrentLevel--;
+        }
+
+        level++;
+    }
+
+    FreeQueue(queue);
+    return root;
+}
+
+// Function to draw a binary tree recursively
+void drawTree(TreeNode* root, int x, int y, int hSpacing, int vSpacing) {
+    if (root != NULL) {
+        // Draw branches
+        if (root->left != NULL) {
+            DrawLine(x, y, x - hSpacing, y + vSpacing, BLACK);
+            drawTree(root->left, x - hSpacing, y + vSpacing, hSpacing / 2, vSpacing);
+        }
+
+        if (root->right != NULL) {
+            DrawLine(x, y, x + hSpacing, y + vSpacing, BLACK);
+            drawTree(root->right, x + hSpacing, y + vSpacing, hSpacing / 2, vSpacing);
+        }
+
+        // Draw circle (node)
+        DrawCircle(x, y, 20, BLACK);
+
+        // Calculate the position to center the text within the circle
+        int textWidth = MeasureText(TextFormat("%d", root->data), 20);
+        int textHeight = 20;  // Assuming font size is 20
+        int textX = x - textWidth / 2;
+        int textY = y - textHeight / 2;
+
+        // Draw current node value
+        DrawText(TextFormat("%d", root->data), textX, textY, 20, WHITE);
+    }
+}
