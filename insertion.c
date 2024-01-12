@@ -174,3 +174,22 @@ void drawTree(TreeNode* root, int x, int y, int hSpacing, int vSpacing) {
         DrawText(TextFormat("%d", root->data), textX, textY, 20, WHITE);
     }
 }
+// Function to draw a rounded rectangle button
+void DrawRoundedButton(Rectangle bounds, const char* text, Color bgColor, Color textColor) {
+    DrawRectangleRounded(bounds, 0.1, 0, bgColor);
+    DrawRectangleRoundedLines(bounds, 0.1, 0, 2, BLACK);
+
+    Vector2 textSize = MeasureTextEx(GetFontDefault(), text, 20, 1);
+    Vector2 textPos = {(float)(bounds.x + bounds.width / 2 - textSize.x / 2), (float)(bounds.y + bounds.height / 2 - textSize.y / 2)};
+    
+    DrawTextEx(GetFontDefault(), text, textPos, 20, 1, textColor);
+}
+
+int main() {
+    const int screenWidth = 800;
+    const int screenHeight = 700;
+
+    InitWindow(screenWidth, screenHeight, "Binary Tree Visualization - Raylib");
+
+    SetTargetFPS(60);
+}
