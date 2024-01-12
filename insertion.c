@@ -232,7 +232,7 @@ int main() {
                 memset(inputValue, 0, sizeof(inputValue));
             }
         }
-
+        
         // add a descriptive message on how it works 
         DrawRectangleRounded((Rectangle){60, screenHeight - 170, 670, 60}, 0.2, 0, (Color){200, 200, 200, 255});
         DrawText(" enter the node's value and press the insert button to insert\n\n       the value to the tree in a level-order insertion", 60 + 10, screenHeight - 170 + 5, 20, BLACK);
