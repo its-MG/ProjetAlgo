@@ -107,3 +107,39 @@ void updateTree(TreeNode* root, double frameTime) {
         updateTree(root->right, frameTime);
     }
 }
+
+int main() {
+    const int screenWidth = 800;
+    const int screenHeight = 700;
+
+    InitWindow(screenWidth, screenHeight, "Binary Tree Visualization - User Input");
+    SetTargetFPS(60);
+
+    TreeNode* root = NULL;  // Initially an empty tree
+
+    // Variable to store the maximum depth
+    const int maxDepth = 5;
+
+    // Variable to keep track of the number of nodes created
+    int nodesCreated = 0;
+
+    // Variable to store the random number of nodes
+    int randomNumNodes = 0;
+
+    // Flag to switch between sorted and non-sorted trees
+    bool isSortedTree = true;
+
+    // User input related variables
+    char inputBuffer[MAX_INPUT_LENGTH + 1];
+    int inputLength = 0;
+    int totalNodes = 0;
+    int previousTotalNodes = 0; // Added to keep track of previous totalNodes
+
+    Rectangle createButtonRect = {10, screenHeight - 40, 90, 30}; // Rectangle for the "Create" button
+    Rectangle toggleButtonRect = {130, screenHeight - 40, 240, 30}; // Rectangle for the "Toggle Tree Type" button
+
+    float nodeCreationDelay = 0.5f; // Adjust the delay time as needed
+    float elapsedTime = 0.0f;
+
+    bool createTree = false;  // Variable to control tree creation
+}
