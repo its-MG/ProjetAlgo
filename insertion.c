@@ -152,17 +152,17 @@ void drawTree(TreeNode* root, int x, int y, int hSpacing, int vSpacing) {
     if (root != NULL) {
         // Draw branches
         if (root->left != NULL) {
-            DrawLine(x, y, x - hSpacing, y + vSpacing, BLACK);
+            DrawLine(x, y, x - hSpacing, y + vSpacing, LIGHTGRAY);
             drawTree(root->left, x - hSpacing, y + vSpacing, hSpacing / 2, vSpacing);
         }
 
         if (root->right != NULL) {
-            DrawLine(x, y, x + hSpacing, y + vSpacing, BLACK);
+            DrawLine(x, y, x + hSpacing, y + vSpacing, LIGHTGRAY);
             drawTree(root->right, x + hSpacing, y + vSpacing, hSpacing / 2, vSpacing);
         }
-
+        Color customColor ={ 0x1F, 0x5E, 0x91, 255 }; // couleur bleu pour les autres noeuds
         // Draw circle (node)
-        DrawCircle(x, y, 20, BLACK);
+        DrawCircle(x, y, 20,customColor);
 
         // Calculate the position to center the text within the circle
         int textWidth = MeasureText(TextFormat("%d", root->data), 20);
@@ -197,13 +197,13 @@ int main() {
     char inputValue[4] = "";
     int inputLength = 0;
     int errorOccurred = 0; // Variable to track whether an error has occurred
-
+    Color backgroundColor = (Color){ 15, 16, 53, 255 };
     while (!WindowShouldClose()) {
         BeginDrawing();
-        ClearBackground((Color){244, 240, 236, 255});
+        ClearBackground(backgroundColor);
 
         // Display instructions
-        DrawText("Insertion in a Binary Tree Node by Node in a level-order manner", 20, 10, 23, (Color){124, 10, 2, 255});
+        DrawText("Insertion in a Binary Tree Node by Node in a level-order manner", 20, 10, 23, (Color){0x4F, 0x97, 0xA9, 0xFF});
 
         // Draw the binary tree
         drawTree(root, screenWidth / 2, 90, 200, 100);
@@ -220,7 +220,7 @@ int main() {
 
         // Draw the insert button
         Rectangle buttonBounds = {120, screenHeight - 40, 200, 30};
-        DrawRoundedButton(buttonBounds, "Insert new node", (Color){124, 10, 2, 255}, WHITE);
+        DrawRoundedButton(buttonBounds, "Insert new node",(Color){0x4F, 0x97, 0xA9, 0xFF}, WHITE);
 
         // Check if the button is pressed
         if (CheckCollisionPointRec(GetMousePosition(), buttonBounds) && IsMouseButtonPressed(MOUSE_LEFT_BUTTON)) {
@@ -234,8 +234,8 @@ int main() {
         }
         
         // add a descriptive message on how it works 
-        DrawRectangleRounded((Rectangle){60, screenHeight - 170, 670, 60}, 0.2, 0, (Color){200, 200, 200, 255});
-        DrawText(" enter the node's value and press the insert button to insert\n\n       the value to the tree in a level-order insertion", 60 + 10, screenHeight - 170 + 5, 20, BLACK);
+        DrawRectangleRounded((Rectangle){60, screenHeight - 150, 670, 60}, 0.2, 0, (Color){200, 200, 200, 255});
+        DrawText(" enter the node's value and press the insert button to insert\n\n       the value to the tree in a level-order insertion", 60 + 10, screenHeight - 150 + 5, 20, BLACK);
 
 
         // Display error message
