@@ -142,4 +142,88 @@ int main() {
     float elapsedTime = 0.0f;
 
     bool createTree = false;  // Variable to control tree creation
+
+    while (!WindowShouldClose()) {
+        BeginDrawing();
+        ClearBackground((Color){244, 240, 236, 255});
+
+        // Display instructions
+        DrawText("Creating Binary Tree Node by Node", 200, 10, 23, (Color){124, 10, 2, 255});
+
+        // Check if the "Create" button is pressed
+        if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON) && CheckCollisionPointRec(GetMousePosition(), createButtonRect)) {
+            createTree = true;  // Set the flag to start tree creation
+        }
+
+        if (createTree) {
+            // Introduce a delay between node creations
+            elapsedTime += GetFrameTime();
+
+            if (elapsedTime >= nodeCreationDelay && nodesCreated < totalNodes) {
+                // Generate a random value for the new node
+                int randomValue = GetRandomValue(1, 100);
+
+                // Insert the new node into the tree based on the tree type
+                if (isSortedTree) {
+                    root = insertNode(root, randomValue, 1, maxDepth, &nodesCreated);
+                } else {
+                    root = insertNode(root, randomValue, 1, maxDepth, &nodesCreated);
+                }
+
+                elapsedTime = 0.0f; // Reset the timer for the next delay
+            }
+
+            // Check if tree creation is complete
+            if (nodesCreated >= totalNodes) {
+                createTree = false;  // Reset the flag
+            }
+        }
+
+        // Check if the "Toggle Tree Type" button is pressed
+        if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON) && CheckCollisionPointRec(GetMousePosition(), toggleButtonRect)) {
+            isSortedTree = !isSortedTree;
+        }
+
+
+
+
+        // Draw the user input for the total number of nodes
+        DrawText("Enter total nodes (1-31):", 10, screenHeight - 70, 20, BLACK);
+
+        for (int i = 0; i < inputLength; ++i) {
+            DrawText(TextFormat("%c", inputBuffer[i]), 270 + i * 10, screenHeight - 70, 20, BLACK);
+        }
+
+        // Display the total number of nodes entered by the user
+        DrawText(TextFormat("Total Nodes: %d", totalNodes), 250, screenHeight - 100, 20, BLACK);
+
+        if (inputLength > 0) {
+            totalNodes = atoi(inputBuffer); // Convert string to integer
+
+            // Check if the totalNodes value has changed
+            if (totalNodes != previousTotalNodes) {
+                nodesCreated = 0;
+                root = NULL;  // Clear the existing tree
+                elapsedTime = 0.0f; // Reset the timer
+            }
+
+            // Update previousTotalNodes
+            previousTotalNodes = totalNodes;
+        }
+
+
+        // Draw information about the tree
+        DrawText(TextFormat("Nodes Created: %d", nodesCreated), 10, 80, 20, BLACK);
+        DrawText(TextFormat("Node's Number: %d", totalNodes), 10, 100, 20, BLACK);
+        DrawText(TextFormat("Tree Type : %s", isSortedTree ? "Sorted" : "Non-Sorted"), 10, 120, 20, BLACK);
+
+        EndDrawing();
+
+    }
+
+    CloseWindow();
+
+    return 0;
 }
+
+
