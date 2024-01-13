@@ -53,8 +53,8 @@ TreeNode* insertNode(TreeNode* root, int data, int currentDepth, int maxDepth, i
 }
 // Function to draw a binary tree recursively
 void drawTree(TreeNode* root, int x, int y, int hSpacing, int vSpacing) {
-    // Define a lighter green color
-    Color lightYel = (Color){147, 197, 114, 255}; // Adjust the green component to make it lighter
+    // Define a lighter blue color
+    Color lightYel = (Color){ 0x1F, 0x5E, 0x91, 255 }; // Adjust the blue component to make it lighter
     if (root != NULL) {
         // Draw left subtree
         if (root->left != NULL) {
@@ -145,10 +145,10 @@ int main() {
 
     while (!WindowShouldClose()) {
         BeginDrawing();
-        ClearBackground((Color){244, 240, 236, 255});
+        ClearBackground((Color){ 15, 16, 53, 255 });
 
         // Display instructions
-        DrawText("Creating Binary Tree Node by Node", 200, 10, 23, (Color){124, 10, 2, 255});
+        DrawText("Creating Binary Tree Node by Node", 200, 10, 23, (Color){0x4F, 0x97, 0xA9, 0xFF});
 
         // Check if the "Create" button is pressed
         if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON) && CheckCollisionPointRec(GetMousePosition(), createButtonRect)) {
@@ -190,11 +190,11 @@ int main() {
         DrawText(" enter the total node's value and press the 'enter' keyboard\n\n   button then press the create button to create the tree", 60 + 10, screenHeight - 170 + 5, 20, BLACK);
 
         // Draw the "Create" button
-        DrawRectangleRounded(createButtonRect, 0.2, 0, (Color){128, 128, 128, 255});
+        DrawRectangleRounded(createButtonRect, 0.2, 0, (Color){0x4F, 0x97, 0xA9, 0xFF});
         DrawText("Create", createButtonRect.x + 10, createButtonRect.y + 5, 20, BLACK);
 
         // Draw the "Toggle Tree Type" button
-        DrawRectangleRounded(toggleButtonRect, 0.2, 0, (Color){128, 128, 128, 255});
+        DrawRectangleRounded(toggleButtonRect, 0.2, 0, (Color){0x4F, 0x97, 0xA9, 0xFF});
         DrawText("Toggle creation type", toggleButtonRect.x + 10, toggleButtonRect.y + 5, 20, BLACK);
 
         // Draw the user input for the total number of nodes
