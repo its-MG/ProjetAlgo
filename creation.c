@@ -184,8 +184,18 @@ int main() {
             isSortedTree = !isSortedTree;
         }
 
+        
+        // add a descriptive message on how it works 
+        DrawRectangleRounded((Rectangle){60, screenHeight - 170, 670, 60}, 0.2, 0, (Color){200, 200, 200, 255});
+        DrawText(" enter the total node's value and press the 'enter' keyboard\n\n   button then press the create button to create the tree", 60 + 10, screenHeight - 170 + 5, 20, BLACK);
 
+        // Draw the "Create" button
+        DrawRectangleRounded(createButtonRect, 0.2, 0, (Color){128, 128, 128, 255});
+        DrawText("Create", createButtonRect.x + 10, createButtonRect.y + 5, 20, BLACK);
 
+        // Draw the "Toggle Tree Type" button
+        DrawRectangleRounded(toggleButtonRect, 0.2, 0, (Color){128, 128, 128, 255});
+        DrawText("Toggle creation type", toggleButtonRect.x + 10, toggleButtonRect.y + 5, 20, BLACK);
 
         // Draw the user input for the total number of nodes
         DrawText("Enter total nodes (1-31):", 10, screenHeight - 70, 20, BLACK);
@@ -211,6 +221,11 @@ int main() {
             previousTotalNodes = totalNodes;
         }
 
+         // Update the tree and reset colors after a certain duration
+        updateTree(root, GetFrameTime());
+
+        // Draw the binary tree
+        drawTree(root, screenWidth / 2, 75, 200, 100);
 
         // Draw information about the tree
         DrawText(TextFormat("Nodes Created: %d", nodesCreated), 10, 80, 20, BLACK);
@@ -218,6 +233,30 @@ int main() {
         DrawText(TextFormat("Tree Type : %s", isSortedTree ? "Sorted" : "Non-Sorted"), 10, 120, 20, BLACK);
 
         EndDrawing();
+
+        // Handle user input for total nodes
+        bool enterPressed = IsKeyPressed(KEY_ENTER);
+
+        for (int key = KEY_ZERO; key <= KEY_NINE; ++key) {
+            if (IsKeyPressed(key)) {
+                if (inputLength < MAX_INPUT_LENGTH) {
+                    inputBuffer[inputLength++] = '0' + (key - KEY_ZERO); // Convert key to digit character
+                    inputBuffer[inputLength] = '\0'; // Null-terminate the string
+                }
+            }
+        }
+
+        if (enterPressed && inputLength > 0) {
+            // Reset input buffer when Enter key is pressed and a number is entered
+            inputLength = 0;
+            memset(inputBuffer, 0, sizeof(inputBuffer));
+        }
+
+        if (IsKeyPressed(KEY_BACKSPACE)) {
+            if (inputLength > 0) {
+                inputBuffer[--inputLength] = '\0'; // Remove the last entered digit
+            }
+        }
 
     }
 
