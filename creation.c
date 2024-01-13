@@ -54,24 +54,25 @@ TreeNode* insertNode(TreeNode* root, int data, int currentDepth, int maxDepth, i
 // Function to draw a binary tree recursively
 void drawTree(TreeNode* root, int x, int y, int hSpacing, int vSpacing) {
     // Define a lighter blue color
-    Color lightYel = (Color){ 0x1F, 0x5E, 0x91, 255 }; // Adjust the blue component to make it lighter
+    Color lightYel = (Color){0x4F, 0x97, 0xA9, 0xFF}; // Adjust the blue component to make it lighter
     if (root != NULL) {
         // Draw left subtree
         if (root->left != NULL) {
             // Adjust the position of the line to avoid crossing the number
-            DrawLine(x - 3, y + 3, x - hSpacing + 3, y + vSpacing - 3, BLACK);
+            DrawLine(x - 3, y + 3, x - hSpacing + 3, y + vSpacing - 3, LIGHTGRAY);
             drawTree(root->left, x - hSpacing, y + vSpacing, hSpacing / 2, vSpacing);
         }
 
         // Draw right subtree
         if (root->right != NULL) {
             // Adjust the position of the line to avoid crossing the number
-            DrawLine(x + 3, y + 3, x + hSpacing - 3, y + vSpacing - 3, BLACK);
+            DrawLine(x + 3, y + 3, x + hSpacing - 3, y + vSpacing - 3, LIGHTGRAY);
             drawTree(root->right, x + hSpacing, y + vSpacing, hSpacing / 2, vSpacing);
         }
 
         // Determine node color
-        Color nodeColor = (root->isNewlyInserted) ? lightYel : BLACK;
+        #define BLU CLITERAL(Color){ 0x1F, 0x5E, 0x91, 255 }
+        Color nodeColor = (root->isNewlyInserted) ? lightYel : BLU;
 
         // Draw filled circle without an outline
         DrawCircleV((Vector2){(float)x, (float)y}, NODE_RADIUS, nodeColor);
@@ -191,21 +192,19 @@ int main() {
 
         // Draw the "Create" button
         DrawRectangleRounded(createButtonRect, 0.2, 0, (Color){0x4F, 0x97, 0xA9, 0xFF});
-        DrawText("Create", createButtonRect.x + 10, createButtonRect.y + 5, 20, BLACK);
+        DrawText("Create", createButtonRect.x + 10, createButtonRect.y + 5, 20, WHITE);
 
         // Draw the "Toggle Tree Type" button
         DrawRectangleRounded(toggleButtonRect, 0.2, 0, (Color){0x4F, 0x97, 0xA9, 0xFF});
-        DrawText("Toggle creation type", toggleButtonRect.x + 10, toggleButtonRect.y + 5, 20, BLACK);
+        DrawText("Toggle creation type", toggleButtonRect.x + 10, toggleButtonRect.y + 5, 20, WHITE);
 
         // Draw the user input for the total number of nodes
-        DrawText("Enter total nodes (1-31):", 10, screenHeight - 70, 20, BLACK);
+        DrawText("Enter total nodes (1-31):", 10, screenHeight - 70, 20, WHITE);
 
         for (int i = 0; i < inputLength; ++i) {
-            DrawText(TextFormat("%c", inputBuffer[i]), 270 + i * 10, screenHeight - 70, 20, BLACK);
+            DrawText(TextFormat("%c", inputBuffer[i]), 270 + i * 10, screenHeight - 70, 20, WHITE);
         }
 
-        // Display the total number of nodes entered by the user
-        DrawText(TextFormat("Total Nodes: %d", totalNodes), 250, screenHeight - 100, 20, BLACK);
 
         if (inputLength > 0) {
             totalNodes = atoi(inputBuffer); // Convert string to integer
@@ -228,9 +227,9 @@ int main() {
         drawTree(root, screenWidth / 2, 75, 200, 100);
 
         // Draw information about the tree
-        DrawText(TextFormat("Nodes Created: %d", nodesCreated), 10, 80, 20, BLACK);
-        DrawText(TextFormat("Node's Number: %d", totalNodes), 10, 100, 20, BLACK);
-        DrawText(TextFormat("Tree Type : %s", isSortedTree ? "Sorted" : "Non-Sorted"), 10, 120, 20, BLACK);
+        DrawText(TextFormat("Nodes Created: %d", nodesCreated), 10, 80, 20, WHITE);
+        DrawText(TextFormat("Nodes Number: %d", totalNodes), 10, 100, 20, WHITE);
+        DrawText(TextFormat("Tree Type : %s", isSortedTree ? "Sorted" : "Non-Sorted"), 10, 120, 20, WHITE);
 
         EndDrawing();
 
