@@ -32,5 +32,3 @@ git clone https://github.com/its-MG/ProjetAlgo.git
 ```
 Vous aurez une copie du projet localement sur votre appareil
 et vous n'avez plus qu'à exécuter !
-
-
