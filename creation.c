@@ -3,7 +3,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-#define NODE_RADIUS 20
+#define NODE_RADIUS 28
 #define MAX_INPUT_LENGTH 2 // Maximum number of digits allowed
 
 // Binary tree node structure
@@ -110,10 +110,10 @@ void updateTree(TreeNode* root, double frameTime) {
 }
 
 int main() {
-    const int screenWidth = 800;
-    const int screenHeight = 700;
+    const int screenWidth = 1000;
+    const int screenHeight = 800;
 
-    InitWindow(screenWidth, screenHeight, "Binary Tree Visualization - User Input");
+    InitWindow(screenWidth, screenHeight, "Création d'un Arbre binaire");
     SetTargetFPS(60);
 
     TreeNode* root = NULL;  // Initially an empty tree
@@ -123,9 +123,6 @@ int main() {
 
     // Variable to keep track of the number of nodes created
     int nodesCreated = 0;
-
-    // Variable to store the random number of nodes
-    int randomNumNodes = 0;
 
     // Flag to switch between sorted and non-sorted trees
     bool isSortedTree = true;
@@ -149,7 +146,7 @@ int main() {
         ClearBackground((Color){ 15, 16, 53, 255 });
 
         // Display instructions
-        DrawText("Creating Binary Tree Node by Node", 200, 10, 23, (Color){0x4F, 0x97, 0xA9, 0xFF});
+        DrawText("Création d'un arbre binaire noeud par noeud", 250, 10, 23, (Color){0x4F, 0x97, 0xA9, 0xFF});
 
         // Check if the "Create" button is pressed
         if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON) && CheckCollisionPointRec(GetMousePosition(), createButtonRect)) {
@@ -187,19 +184,19 @@ int main() {
 
         
         // add a descriptive message on how it works 
-        DrawRectangleRounded((Rectangle){60, screenHeight - 170, 670, 60}, 0.2, 0, (Color){200, 200, 200, 255});
-        DrawText(" enter the total node's value and press the 'enter' keyboard\n\n   button then press the create button to create the tree", 60 + 10, screenHeight - 170 + 5, 20, BLACK);
+        DrawRectangleRounded((Rectangle){150, screenHeight - 170, 670, 60}, 0.2, 0, (Color) { 0x29, 0x32, 0x41, 200 });
+        DrawText("Saisir le nombre total et appuyer sur la touche  « entrer »\n\n puis le bouton créer pour lancer la creation de l'arbre",160, screenHeight - 170 + 5, 20,(Color){ 0x98, 0xC1, 0xD9, 255 });
 
         // Draw the "Create" button
         DrawRectangleRounded(createButtonRect, 0.2, 0, (Color){0x4F, 0x97, 0xA9, 0xFF});
-        DrawText("Create", createButtonRect.x + 10, createButtonRect.y + 5, 20, WHITE);
+        DrawText("Créer", createButtonRect.x + 10, createButtonRect.y + 5, 20, WHITE);
 
         // Draw the "Toggle Tree Type" button
         DrawRectangleRounded(toggleButtonRect, 0.2, 0, (Color){0x4F, 0x97, 0xA9, 0xFF});
-        DrawText("Toggle creation type", toggleButtonRect.x + 10, toggleButtonRect.y + 5, 20, WHITE);
+        DrawText("Basculer le type ", toggleButtonRect.x + 10, toggleButtonRect.y + 5, 20, WHITE);
 
         // Draw the user input for the total number of nodes
-        DrawText("Enter total nodes (1-31):", 10, screenHeight - 70, 20, WHITE);
+        DrawText("Entrez le total de noeuds (1-31):", 10, screenHeight - 70, 20, WHITE);
 
         for (int i = 0; i < inputLength; ++i) {
             DrawText(TextFormat("%c", inputBuffer[i]), 270 + i * 10, screenHeight - 70, 20, WHITE);
@@ -224,12 +221,12 @@ int main() {
         updateTree(root, GetFrameTime());
 
         // Draw the binary tree
-        drawTree(root, screenWidth / 2, 75, 200, 100);
+        drawTree(root, screenWidth / 2,110, 240, 100);
 
         // Draw information about the tree
-        DrawText(TextFormat("Nodes Created: %d", nodesCreated), 10, 80, 20, WHITE);
-        DrawText(TextFormat("Nodes Number: %d", totalNodes), 10, 100, 20, WHITE);
-        DrawText(TextFormat("Tree Type : %s", isSortedTree ? "Sorted" : "Non-Sorted"), 10, 120, 20, WHITE);
+        DrawText(TextFormat("Noeuds crées: %d", nodesCreated), 10, 80, 20, WHITE);
+        DrawText(TextFormat("Nombre de noeuds : %d", totalNodes), 10, 100, 20, WHITE);
+        DrawText(TextFormat("Type de l'arbre : %s", isSortedTree ? "Triée" : "Non-Triée"), 10, 120, 20, WHITE);
 
         EndDrawing();
 

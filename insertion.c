@@ -162,7 +162,7 @@ void drawTree(TreeNode* root, int x, int y, int hSpacing, int vSpacing) {
         }
         Color customColor ={ 0x1F, 0x5E, 0x91, 255 }; // couleur bleu pour les autres noeuds
         // Draw circle (node)
-        DrawCircle(x, y, 20,customColor);
+        DrawCircle(x, y, 28,customColor);
 
         // Calculate the position to center the text within the circle
         int textWidth = MeasureText(TextFormat("%d", root->data), 20);
@@ -186,10 +186,10 @@ void DrawRoundedButton(Rectangle bounds, const char* text, Color bgColor, Color 
 }
 
 int main() {
-    const int screenWidth = 800;
-    const int screenHeight = 700;
+    const int screenWidth = 1000;
+    const int screenHeight = 800;
 
-    InitWindow(screenWidth, screenHeight, "Binary Tree Visualization - Raylib");
+    InitWindow(screenWidth, screenHeight, "Visualisation de l'insertion");
 
     SetTargetFPS(60);
     
@@ -203,10 +203,10 @@ int main() {
         ClearBackground(backgroundColor);
 
         // Display instructions
-        DrawText("Insertion in a Binary Tree Node by Node in a level-order manner", 20, 10, 23, (Color){0x4F, 0x97, 0xA9, 0xFF});
+        DrawText("Insertion dans un arbre binaire ordonnée par niveau", 180, 10, 23, (Color){0x4F, 0x97, 0xA9, 0xFF});
 
         // Draw the binary tree
-        drawTree(root, screenWidth / 2, 90, 200, 100);
+        drawTree(root, screenWidth / 2,100, 200, 100);
 
         // Draw the input text box
         Rectangle textBoxBounds = {10, screenHeight - 40, 100, 30};
@@ -220,7 +220,7 @@ int main() {
 
         // Draw the insert button
         Rectangle buttonBounds = {120, screenHeight - 40, 200, 30};
-        DrawRoundedButton(buttonBounds, "Insert new node",(Color){0x4F, 0x97, 0xA9, 0xFF}, WHITE);
+        DrawRoundedButton(buttonBounds, "Insérer",(Color){0x4F, 0x97, 0xA9, 0xFF}, WHITE);
 
         // Check if the button is pressed
         if (CheckCollisionPointRec(GetMousePosition(), buttonBounds) && IsMouseButtonPressed(MOUSE_LEFT_BUTTON)) {
@@ -234,13 +234,13 @@ int main() {
         }
         
         // add a descriptive message on how it works 
-        DrawRectangleRounded((Rectangle){60, screenHeight - 150, 670, 60}, 0.2, 0, (Color){200, 200, 200, 255});
-        DrawText(" enter the node's value and press the insert button to insert\n\n       the value to the tree in a level-order insertion", 60 + 10, screenHeight - 150 + 5, 20, BLACK);
+        DrawRectangleRounded((Rectangle){170, screenHeight - 150, 670, 60}, 0.2, 0, (Color) { 0x29, 0x32, 0x41, 200 });
+        DrawText("Entrer la valeur du noeud et appuyer sur insérer pour insérer\n\n la valeur désirée d'une manière ordonnée par niveau",180, screenHeight - 150 + 5, 20, (Color){ 0x98, 0xC1, 0xD9, 255 });
 
 
         // Display error message
         if (errorOccurred) {
-            DrawText("Error: Tree is full (reached level 5)", 10, screenHeight - 90 , 20, (Color){124, 10, 2, 255});
+            DrawText("Error: Tree is full (reached level 5)", 10, screenHeight -80, 20, (Color){124, 10, 2, 255});
             // Do not reset errorOccurred after displaying the error message
             // The message will remain on the screen until the program is closed
         }

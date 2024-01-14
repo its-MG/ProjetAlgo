@@ -109,7 +109,7 @@ int main() {
 
     //message explicatif au utilisateurs
     const char *line1 = "Lorsque vous cliquez sur le button, un algorithme de recherche sera lancé pour";
-    const char *line2 = "chercher la valeur que vous avez sélectionnée.";
+    const char *line2 = "chercher la valeur que vous avez sélectionné.";
     // calcul pour centrer le rectangle message
     int rectangleWidth = screenWidth - 120;
     int rectangleHeight = 90;

@@ -141,7 +141,7 @@ TreeNode *deleteNode(TreeNode *root, int key)
 int main()
 {
     Color backgroundColor = (Color){15, 16, 53, 255};
-    const int screenWidth = 1200;
+    const int screenWidth = 1000;
     const int screenHeight = 800;
     int inputNumber;
 
@@ -150,14 +150,14 @@ int main()
     InitWindow(screenWidth, screenHeight, "Visualisation de suppression dans un arbre binaire - Raylib");
 
     // message explicatif au utilisateurs
-    const char *line1 = "Lorsque vous cliquez sur le button, un algorithme de suppression sera lancé pour supprimer ";
-    const char *line2 = "la valeur que vous avez saisi";
+    const char *line1 = "Lorsque vous cliquez sur le button, un algorithme de suppression sera lancé pour ";
+    const char *line2 = "supprimer la valeur que vous avez saisi.";
 
     // calcul pour centrer le rectangle message
     int rectangleWidth = screenWidth - 90;
     int rectangleHeight = 80;
     int rectangleX = (screenWidth - rectangleWidth) / 2; // X position for centering
-    int rectangleY = screenHeight - 200;                 // Y position at the bottom with a margin
+    int rectangleY = screenHeight -180;                 // Y position at the bottom with a margin
     Rectangle messageRect = {rectangleX, rectangleY, rectangleWidth, rectangleHeight};
 
     Rectangle deleteButtonRect = {10, 10, 150, 40};       // "Delete Node" button rectangle
@@ -214,10 +214,10 @@ int main()
         if (showMessage)
         {
             // message d'explication au début
-            DrawRectangleRounded(messageRect, 0.2, 0, DARKGRAY);
+            DrawRectangleRounded(messageRect, 0.2, 0,(Color) { 0x29, 0x32, 0x41, 200 });
             // dessiner le message
-            DrawText(line1, messageRect.x + 10, messageRect.y + 10, 20, WHITE);
-            DrawText(line2, messageRect.x + 10, messageRect.y + 35, 20, WHITE);
+            DrawText(line1, messageRect.x + 10, messageRect.y + 10, 20, (Color){ 0x98, 0xC1, 0xD9, 255 });
+            DrawText(line2, messageRect.x + 10, messageRect.y + 35, 20, (Color){ 0x98, 0xC1, 0xD9, 255 });
         }
         DrawText("Saisir un nombre:", 10, screenHeight - 50, 20, GREEN);
 
@@ -228,9 +228,9 @@ int main()
         }
 
         // dessiner le rectangle du boutton supprimer
-        DrawRectangleRounded(deleteButtonRect, 0.2, 0, DARKGRAY);
+        DrawRectangleRounded(deleteButtonRect, 0.2, 0, (Color) { 0x29, 0x32, 0x41, 200 });
 
-        DrawText("Supprimer", deleteButtonRect.x + 25, deleteButtonRect.y + 8, 20, WHITE);
+        DrawText("Supprimer", deleteButtonRect.x + 25, deleteButtonRect.y + 8, 20, (Color){ 0x98, 0xC1, 0xD9, 255 });
 
         drawTree(root, screenWidth / 2, 80, screenWidth / 4, 150);
 
